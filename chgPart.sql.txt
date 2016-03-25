@@ -1,0 +1,11 @@
+SELECT 
+	dbo_UV_DeliveryCommitment_NOSHFD.DeliveryCommitmentNumber, 
+	dbo_Loan.DeliveryCommitmentNumber, 
+	dbo_Loan.LoanNumber/1 AS LoanNumber, 
+	(1-([NewYorkParticipation]+[IndianapolisParticipation]+[BostonParticipation]+[PittsburghParticipation]+
+		[AtlantaParticipation]+[CincinnatiParticipation]+[DesMoinesParticipation]+[TopekaParticipation]+
+		[DallasParticipation]+[SanFranciscoParticipation]+[SeattleParticipation])) AS ChicagoParticipation 
+INTO 	ChicagoParticipation_LoanLevel
+FROM 	dbo_UV_DeliveryCommitment_NOSHFD INNER JOIN dbo_Loan 
+ON 	dbo_UV_DeliveryCommitment_NOSHFD.DeliveryCommitmentNumber = dbo_Loan.DeliveryCommitmentNumber
+ORDER BY dbo_Loan.LoanNumber;
